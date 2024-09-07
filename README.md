@@ -1,10 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
-
 ## Getting Started
 
-First, run the development server:
+## 1. Install Dependencies
+
+To get started, first install the project dependencies. You can use one of the following commands depending on your package manager:
 
 ```bash
+npm install
+# or
+yarn install
+# or
+pnpm install
+# or
+bun install
+```
+
+## 2. Configure Environment Variables
+
+Create a .env.local file in the root directory of your project if it doesn't already exist. Add your MongoDB connection URL to this file:
+
+```
+MONGODB_URL=your_mongodb_connection_url_here
+```
+
+## 3. Start the Server
+
+Start the development server using one of the following commands:
+
+```
 npm run dev
 # or
 yarn dev
@@ -14,23 +36,29 @@ pnpm dev
 bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 4. Adding Demo Data to the Database
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+In one of your components, there's commented-out code to add demo data to the database. To use this feature:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+#### 1. Uncomment the code in the component to add demo data.
 
-## Learn More
+<details>
+<summary><code>page.tsx</code></summary>
 
-To learn more about Next.js, take a look at the following resources:
+```typescript
+      const handleAdd = async () => {
+        for(let i=0 ; i<demoPapers.length ; i++) {
+          const {title, authors, description, publicationYear, citationsCount} = demoPapers[i]
+          await addPaper({title, authors, description, publicationYear, citationsCount});
+          console.log(`Added paper ${demoPapers[i].title}`)
+        }
+      }
+      handleAdd()
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+</details>
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+#### 2. Run the server to execute the data addition.
+#### 3. Comment the code again to prevent adding duplicate data on subsequent reloads.
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Make sure to re-comment the code after the demo data has been successfully added to avoid unnecessary duplicates.
