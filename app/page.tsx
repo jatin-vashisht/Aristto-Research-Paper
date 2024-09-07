@@ -7,6 +7,7 @@ import {
   searchPaper,
 } from "@/lib/actions/paper.action";
 import { useSearchParams } from "next/navigation";
+import { Suspense } from "react";
 import { useEffect, useState } from "react";
 
 export default function Home() {
@@ -56,28 +57,30 @@ export default function Home() {
   };
 
   return (
-    <div className="w-full max-w-5xl">
-      {researchPapers.map(
-        ({
-          _id,
-          title,
-          authors,
-          description,
-          publicationYear,
-          citationsCount,
-        }: any) => (
-          <ResearchPaper
-            key={_id}
-            id={_id}
-            title={title}
-            authors={authors}
-            description={description}
-            publicationYear={publicationYear}
-            citationsCount={citationsCount}
-            handleSave={handleSave}
-          />
-        )
-      )}
-    </div>
+    <Suspense>
+      <div className="w-full max-w-5xl">
+        {researchPapers.map(
+          ({
+            _id,
+            title,
+            authors,
+            description,
+            publicationYear,
+            citationsCount,
+          }: any) => (
+            <ResearchPaper
+              key={_id}
+              id={_id}
+              title={title}
+              authors={authors}
+              description={description}
+              publicationYear={publicationYear}
+              citationsCount={citationsCount}
+              handleSave={handleSave}
+            />
+          )
+        )}
+      </div>
+    </Suspense>
   );
 }
